@@ -1,0 +1,7 @@
+﻿GOOGLE API OAUTH
+b1. console google developer -> new project -> select project + add libaary Google+ API -> create credential (google+ api, web browser, user data) 
+ -> click button what credentials do i need -> add http://localhost:3000 + 
+
+b2. developer google playground -> select google oauth2 api v2 -> select userinfo.profile + buton authorize apis 
+ -> 
+
