@@ -2,6 +2,7 @@ const express = require('express')
 const passport = require('./passport')
 const mongoose = require('mongoose');
 const JWT = require('jsonwebtoken');
+const cors = require('cors')
 
 const app = express()
 
@@ -13,8 +14,7 @@ mongoose
 
 
 app.use(express.json());
-
-
+app.use(cors());
 
 
 signToken = user => {
@@ -39,6 +39,11 @@ app.post('/oauth/facebook', passport.authenticate('facebookToken', {session: fal
   return res.status(200).send({token});
 })
  
-app.listen(3000, () => {
+app.get('/test', (req, res) => {
+  return res.send({"ok": "true"})
+})
+
+
+app.listen(3001, () => {
     console.log('server is running');
 })
