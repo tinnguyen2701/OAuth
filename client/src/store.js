@@ -1,15 +1,17 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { all } from 'redux-saga/effects';
 import createSagaMiddleware from 'redux-saga';
-import {titleReducer as title, getTitleSaga} from './duck'
+import {titleReducer as title, getTitleSaga, fbReducer, fbSaga} from './duck'
 
 const rootReducer = combineReducers({
-  title
+  title,
+  fbReducer
 });
 
 export const rootSaga = function* rootSaga() {
   yield all([
     ...getTitleSaga,
+    ...fbSaga
   ]);
 };
 
