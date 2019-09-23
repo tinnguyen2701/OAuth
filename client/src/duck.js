@@ -1,15 +1,16 @@
 import { fork, put, call, takeLatest } from 'redux-saga/effects';
 import { callApi, createAction, createReducer } from './dorothy/utils';
 
-export const GET_TITLE_REQUEST = 'GET_TITLE_REQUEST';
-export const GET_TITLE_RESPONSE = 'GET_TITLE_RESPONSE';
+export const GET_OAUTH_REQUEST = 'GET_OAUTH_REQUEST';
+export const GET_OAUTH_RESPONSE = 'GET_OAUTH_RESPONSE';
 
 function* requestTitle(action) { // action: {type: '', payload: ''}
     try {
         const response = yield call(
             callApi,
-            'GET',
-            'http://localhost:3001/test',
+            'POST',
+            'http://localhost:3001/oauth/google',
+            {access_token: action.payload.accessToken}
         );
         if(response){
             console.log(response);
@@ -19,12 +20,12 @@ function* requestTitle(action) { // action: {type: '', payload: ''}
     }
 }
 function* titleRequest() {
-  yield takeLatest(GET_TITLE_REQUEST, requestTitle);
+  yield takeLatest(GET_OAUTH_REQUEST, requestTitle);
 }
 
 const initTitle = null;
 const titleActionHandler = {
-  [GET_TITLE_RESPONSE]: (state, action) => action.payload,
+  [GET_OAUTH_RESPONSE]: (state, action) => action.payload,
 };
 
 export const titleReducer = createReducer(initTitle, titleActionHandler);

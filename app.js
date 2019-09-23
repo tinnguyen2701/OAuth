@@ -29,7 +29,7 @@ signToken = user => {
 app.post('/oauth/google', passport.authenticate('googleToken', {session: false}), (req, res, next) => {
     console.log('req user', req.user);
     const token = signToken(req.user);
-
+    
     return res.status(200).send({token})
 })
 
@@ -38,11 +38,6 @@ app.post('/oauth/facebook', passport.authenticate('facebookToken', {session: fal
   const token = signToken(req.user)
   return res.status(200).send({token});
 })
- 
-app.get('/test', (req, res) => {
-  return res.send({"ok": "true"})
-})
-
 
 app.listen(3001, () => {
     console.log('server is running');

@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+import GoogleLogin from 'react-google-login';
 import logo from './logo.svg';
 import './App.css';
 import store from './store';
-import { GET_TITLE_REQUEST } from './duck';
+import { GET_OAUTH_REQUEST } from './duck';
 
 function App() {
-
-  useEffect(() => {
-    store.dispatch({type: GET_TITLE_REQUEST})
-  }, [])
+    const responseGoogle = (response) => {
+    store.dispatch({type: GET_OAUTH_REQUEST, payload: response})
+  }
 
   return (
     <div className="App">
@@ -26,6 +26,15 @@ function App() {
           Learn React
         </a>
       </header>
+      <GoogleLogin 
+        clientId='815737839046-mdn1u1489c5sk11bhba2h1b7b94lk770.apps.googleusercontent.com'
+        render={renderProps => (
+          <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</button>
+        )}
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        className="btn btn-outline-danger"
+      />
     </div>
   );
 }
