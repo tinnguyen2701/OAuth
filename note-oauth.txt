@@ -5,3 +5,5 @@ b1. console google developer -> new project -> select project + add libaary Goog
 b2. developer google playground -> select google oauth2 api v2 -> select userinfo.profile + buton authorize apis 
  -> 
 
+FACEBOOK API OAUTH
+b1. facebook developer -> new app -> config app

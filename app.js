@@ -32,6 +32,12 @@ app.post('/oauth/google', passport.authenticate('googleToken', {session: false})
 
     return res.status(200).send({token})
 })
+
+app.post('/oauth/facebook', passport.authenticate('facebookToken', {session: false}), (req, res, next) => {
+  console.log('req.user', req.user);
+  const token = signToken(req.user)
+  return res.status(200).send({token});
+})
  
 app.listen(3000, () => {
     console.log('server is running');

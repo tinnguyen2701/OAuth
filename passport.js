@@ -1,5 +1,6 @@
 const passport = require('passport');
 const GooglePlusTokenStrategy = require('passport-google-plus-token');
+const FacebookTokenStrategy = require('passport-facebook-token');
 const User = require('./models/userModel')
 
 // Google OAuth Strategy
@@ -33,5 +34,36 @@ passport.use('googleToken', new GooglePlusTokenStrategy({
     }
       
   }));
+
+passport.use('facebookToken', new FacebookTokenStrategy({
+  clientID: '959756107708923',
+  clientSecret: 'ebd3972e0b89c1ecd940d37868787257'
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    console.log('profile', profile);
+    console.log('accessToken', accessToken);
+    console.log('refreshToken', refreshToken);
+    
+    const existingUser = await User.findOne({'facebook.id': profile.id})
+    if(existingUser){
+      return done(null, existingUser)
+    }
+
+    const newUser = new User({
+      method: 'facebook',
+      facebook: {
+        id: profile.id,
+        email: profile.id + '@gmail.com'
+      }
+    })
+
+    await newUser.save();
+    done(null, newUser)
+
+  } catch (error) {
+    done(error, false, error.message)
+  }
+}))
+
 
 module.exports = passport
